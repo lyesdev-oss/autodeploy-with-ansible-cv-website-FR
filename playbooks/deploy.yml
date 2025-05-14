@@ -5,7 +5,7 @@
 
   vars:
     app_dir: "/home/ubuntu/lyes-cv-site"
-    repo_url: "https://github.com/TON_UTILISATEUR_GITHUB/lyes-cv-site.git"
+    repo_url: "https://github.com/lyesdev-oss/autodeploy-with-ansible-cv-website-FR.git"
     docker_image: "lyes-cv-site"
     docker_container: "cv-web"
 
