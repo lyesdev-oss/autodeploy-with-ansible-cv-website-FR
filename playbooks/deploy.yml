@@ -10,10 +10,20 @@
     docker_container: "cv-web"
 
   tasks:
+  - name: Vérifier si Docker est installé
+  command: which docker
+  register: docker_path
+  ignore_errors: yes
+
+- name: Installer Docker s'il n'est pas présent
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+  when: docker_path.rc != 0
     - name: Installer git et docker
       apt:
-        name:
-          - docker.io
+        name: install git
           - git
         update_cache: yes
         state: present
