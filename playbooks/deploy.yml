@@ -21,14 +21,6 @@
     state: present
     update_cache: yes
   when: docker_path.rc != 0
-        
-
-    - name: S'assurer que Docker tourne
-      service:
-        name: docker
-        state: started
-        enabled: true
-
     - name: Cloner/Maj dépôt CV
       git:
         repo: "{{ repo_url }}"
