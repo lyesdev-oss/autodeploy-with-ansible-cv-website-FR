@@ -1,5 +1,53 @@
-- name: Déploiement du serveur CV Web
-  hosts: web
-  become: true
-  roles:
-    - webserver
+---
+- name: Déployer le site CV avec Docker
+  hosts: all
+  become: yes
+
+  vars:
+    app_dir: "/home/ubuntu/lyes-cv-site"
+    repo_url: "https://github.com/TON_UTILISATEUR_GITHUB/lyes-cv-site.git"
+    docker_image: "lyes-cv-site"
+    docker_container: "cv-web"
+
+  tasks:
+    - name: Installer git et docker
+      apt:
+        name:
+          - docker.io
+          - git
+        update_cache: yes
+        state: present
+
+    - name: S'assurer que Docker tourne
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Cloner/Maj dépôt CV
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: main
+        force: yes
+
+    - name: Construire l'image Docker CV
+      docker_image:
+        path: "{{ app_dir }}"
+        name: "{{ docker_image }}"
+        force_source: yes
+        force_tag: yes
+
+    - name: Arrêter et supprimer ancien container si existe
+      docker_container:
+        name: "{{ docker_container }}"
+        state: absent
+
+    - name: Lancer et exposer le nouveau container CV
+      docker_container:
+        name: "{{ docker_container }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
