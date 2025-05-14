@@ -21,11 +21,7 @@
     state: present
     update_cache: yes
   when: docker_path.rc != 0
-        name: install git
-        apt:
-          - git
-        update_cache: yes
-        state: present
+        
 
     - name: S'assurer que Docker tourne
       service:
