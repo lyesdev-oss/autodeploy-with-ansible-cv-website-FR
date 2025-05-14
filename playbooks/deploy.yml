@@ -10,17 +10,6 @@
     docker_container: "cv-web"
 
   tasks:
-  - name: Vérifier si Docker est installé
-  command: which docker
-  register: docker_path
-  ignore_errors: yes
-
-- name: Installer Docker s'il n'est pas présent
-  apt:
-    name: 
-    -docker.io
-    state: present
-    update_cache: yes
     - name: Cloner/Maj dépôt CV
       git:
         repo: "{{ repo_url }}"
