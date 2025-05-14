@@ -1,6 +1,6 @@
 ---
 - name: Déployer le site CV avec Docker
-  hosts: all
+  hosts: localhost
   become: yes
 
   vars:
