@@ -20,7 +20,6 @@
     name: docker.io
     state: present
     update_cache: yes
-  when: docker_path.rc != 0
     - name: Cloner/Maj dépôt CV
       git:
         repo: "{{ repo_url }}"
